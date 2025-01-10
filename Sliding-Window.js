@@ -108,21 +108,6 @@ function CountOccuranceOfAnagram(str, anagram) {
 // CountOccuranceOfAnagram(str, anagram)
 
 // 5- Given a binary array, find the maximum number of consecutive 1s you can achieve by flipping at most one 0.
-function MaxConsecutiveOnes(nums) {
-  let counter = 0
-  let flip = 0
-
-  for (i of nums) {
-    if (i === 0) flip++
-    if (flip > 1) break
-
-    counter++
-  }
-
-  console.log({ counter })
-}
-
-// approach -2 myself  
 function maxConsecutiveOnes(nums) {
   let start = 0,
     length = 0,
@@ -149,13 +134,13 @@ function maxConsecutiveOnes(nums) {
   }
 }
 
-const nums = [1, 1, 0, 1, 1, 1, 0, 1, 1] // 6 -> second 0
+// const nums = [1, 1, 0, 1, 1, 1, 0, 1, 1] // 6 -> second 0
 // const nums = [1, 1, 1, 1, 0, 1, 1, 1, 1] // 9 
 // const nums = [1, 0, 1, 1, 0] // 4 -> first 0
 // const nums = [1, 0, 1, 1, 0, 1] // -> 4 -> any 0
 // const nums = [1, 1, 1, 1, 0] // 5 
 // const nums = [0, 1, 0, 0, 1, 1] // 3 -> third 0
-maxConsecutiveOnes(nums)
+// maxConsecutiveOnes(nums)
 
 
 
@@ -193,8 +178,7 @@ function longestSubStringDistinctChars(str, K) {
   let maxChars = 0,
     charFreq = {},
     distinct = 0,
-    start = 0,
-    subStringStart = 0
+    start = 0
 
   for (end in str) {
     end = Number(end)
@@ -322,8 +306,234 @@ function smallestSubstringContainingPattern(str, pattern) {
   return minLength === Infinity ? "" : str.substring(substringStart, substringStart + minLength);
 }
 
-
 // const str = 'abdcabc' // cab
 // const subStr = 'abc'
 
 // console.log(smallestSubstringContainingPattern(str, subStr))
+
+// 10 Minutes completion
+// 8- Given an array and an integer K, find the maximum value in each sliding window of size K
+function SlidingWindowMaximum(nums, K) {
+  const maxNums = []
+  for (let start = 0; start < nums.length - K + 1; start++) {
+
+    let maxNum = Infinity * -1
+    for (let iter = start; iter < start + K; iter++) {
+      if (nums[iter] > maxNum) {
+        maxNum = nums[iter]
+      }
+    }
+    maxNums.push(maxNum)
+  }
+
+  console.log({ maxNums })
+}
+
+// const nums = [1] // [1]
+// const K = 1
+
+// const nums = [1, 3, -1, -3, 5, 3, 6, 7] // [3,3,5,5,6,7]
+// const K = 3
+
+// SlidingWindowMaximum(nums, K)
+
+// 22 Minutes
+// 9- Find the length of the longest subarray with a sum equal to K
+function longestSubArraySumEqualsGivenNum(nums, K) {
+
+  let end = 0,
+    longest = 0
+
+  for (const [start, _] of nums.entries()) {
+    let sum = 0
+
+    while (start <= end && sum <= K) {
+      sum += nums[start]
+
+      if (sum > K) {
+        end = start
+      }
+
+      if (sum === K && end - start > longest) {
+        console.log({ sum, end, start })
+        longest = end - start
+      }
+
+      end++
+    }
+  }
+
+  console.log({ longest })
+
+
+}
+
+// const nums = [4, 1, 1, 1, 2, 3, 5]
+// const K = 5
+
+// longestSubArraySumEqualsGivenNum(nums, K)
+
+// 20 minutes
+// 10- Check if the first string's permutation is a substring of the second string.
+function PermutationInString(str, permutation) {
+  let charFreq = {}
+  for (let i of permutation) {
+    charFreq[i] = (charFreq[i] || 0) + 1
+  }
+
+  let matched = 0
+
+  for (let [_, elem] of str.split('').entries()) {
+    if (charFreq[elem] > 0) matched++
+
+    if (matched > 0 && !charFreq[elem]) {
+      matched = 0
+    }
+
+    if (matched === permutation.length) {
+      break
+    }
+  }
+
+  console.log(matched === permutation.length)
+}
+
+// const str = "eidbaooo"
+// const permutation = "ab"
+
+// const str = "eidboaoo"
+// const permutation = "ab"
+
+// PermutationInString(str, permutation)
+
+
+// 11- Find the number of subarrays with exactly K different integers.
+function SubArraysWithGivenNumOfDistinctInt(nums, K) {
+  let end = 0,
+    start = 0,
+    numOfSubArrays = 0
+
+  // for (const [start, rightChar] of nums.entries()) {
+  while (start <= nums.length) {
+    let distinct = 1,
+      hashMap = {}
+
+    hashMap[nums[start]] = 1
+    end = start
+    // console.log({ distinct, start, end })
+
+    while (distinct <= K && end < nums.length) {
+      if (!hashMap[nums[end]]) {
+        hashMap[nums[end]] = 1
+        distinct++
+      }
+
+
+
+      if (distinct == K) numOfSubArrays++
+
+      console.log({ distinct, start, end, numOfSubArrays })
+      if (distinct <= K) end++
+    }
+
+    console.log({ numOfSubArrays, end }, '\n')
+
+    start++
+  }
+
+  return { numOfSubArrays }
+}
+
+// approach GPT
+function subArraysWithGivenNumOfDistinctInt(nums, K) {
+  function atMostKDistinct(nums, K) {
+    let start = 0,
+      count = 0,
+      freqMap = {};
+
+    for (let end = 0; end < nums.length; end++) {
+      const rightChar = nums[end];
+
+      // Add the current element to the frequency map
+      if (!freqMap[rightChar]) {
+        freqMap[rightChar] = 0;
+      }
+      freqMap[rightChar]++;
+
+      // If we have more than K distinct elements, shrink the window
+      while (Object.keys(freqMap).length > K) {
+        const leftChar = nums[start];
+        freqMap[leftChar]--;
+
+        if (freqMap[leftChar] === 0) {
+          delete freqMap[leftChar];
+        }
+        start++;
+      }
+
+      // Count subarrays ending at `end`
+      count += end - start + 1;
+    }
+
+    return count;
+  }
+
+  // To get exactly K distinct, subtract the result of atMost(K-1) from atMost(K)
+  return atMostKDistinct(nums, K) - atMostKDistinct(nums, K - 1);
+}
+
+
+
+
+// const nums = [1, 2, 1, 2, 3]; // 7
+// const K = 2
+
+// const nums = [1, 2, 3, 4] // 4
+// const nums = [4, 4, 4, 4] // 10
+// const K = 1
+
+// const nums = [1, 2, 3, 4, 5] // 3
+// const K = 3
+
+// const nums = [1, 2, 1, 2, 1] // 10
+// const K = 2
+
+// const nums = [1, 2, 1, 3, 4]
+// const K = 3
+
+// console.log(SubArraysWithGivenNumOfDistinctInt(nums, K))
+
+
+// 50 minutes
+// 12- Find the contiguous subarray which has the largest product.
+function MaximumProductOfSubArray(nums) {
+  let maxProduct = 0,
+    end = 0
+
+  for (let start = 0; end < nums.length; start++) {
+
+    let tempProduct = 1
+
+    while (end < nums.length) {
+      let product = nums[end] * tempProduct
+
+      tempProduct = product
+
+      if (tempProduct > maxProduct) maxProduct = tempProduct
+      end++
+    }
+
+    end = start + 1
+  }
+
+  console.log({ maxProduct })
+}
+
+
+// const nums = [-2, -3, 0, -2, -40]
+// const nums = [0, 2] // 2
+// const nums = [-1, -2, -9, 3] // 54
+// const nums = [2, 3, -2, 4] // 6
+// const nums = [-2, 0, -1] // 0
+// const nums = [1, -2, -3, 4] // 24
+// MaximumProductOfSubArray(nums)
