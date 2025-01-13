@@ -4,7 +4,9 @@ const app = express();
 // require('./Merge-Sort')
 // require('./Quick-Sort')
 // require('./Binary-Search')
-require('./Sliding-Window')
+// require('./Arrays/Sliding-Window')
+require('./Linked-list/doubly')
+// require('./Linked-list/singly')
 
 // Example route
 app.get('/api/example', responseMiddleware, (req, res) => {
