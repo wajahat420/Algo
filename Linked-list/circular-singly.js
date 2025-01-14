@@ -5,7 +5,7 @@ class Node {
   }
 }
 
-class SinglyLinkedList {
+class CircularSinglyLinkedList {
   constructor() {
     this.head = null
     this.tail = null
@@ -23,6 +23,7 @@ class SinglyLinkedList {
 
   append(value) {
     const newNode = new Node(value)
+    newNode.next = this.head
     if (!this.head) {
       this.head = this.tail = newNode
     } else {
@@ -85,20 +86,22 @@ class SinglyLinkedList {
   }
 
   print() {
+    if (!this.head) return console.log('List is empty')
     let current = this.head
     let output = []
 
-    while (current) {
+    do {
       output.push(current.value)
       current = current.next
     }
+    while (current !== this.head)
 
     console.log(output.join(' -> '))
   }
 
   bulkInsertDummyData() {
     // Append nodes to the list
-    const list = new SinglyLinkedList()
+    const list = new CircularSinglyLinkedList()
     list.append(10);
     list.append(20);
     list.append(30);
@@ -107,27 +110,13 @@ class SinglyLinkedList {
   }
 }
 
-// const list = new SinglyLinkedList()
+// const list = new CircularSinglyLinkedList()
 // list.append(5)
 // list.append(10)
 // list.append(15)
 // list.print()
 
-// const node = list.find(10)
-// list.remove(node)
-// list.print()
-
-// list.removeFirst()
-// list.print()
-
-// list.prepend(10)
-// list.print()
-// list.prepend(5)
-// list.print()
-
-// list.removeLast()
-// list.print()
 
 module.exports = {
-  SinglyLinkedList, Node
+  CircularSinglyLinkedList, Node
 }

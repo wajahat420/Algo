@@ -98,6 +98,26 @@ class DoublyLinkedList {
     this.head = prev
   }
 
+
+  recursiveReversal() {
+    this.head = this.reverseRecursiveHelper(this.head);
+  }
+
+  // Recursive reversal helper function
+  reverseRecursiveHelper(node) {
+    if (node === null || node.next === null) {
+      return node; // Base case
+    }
+
+    let reversedList = this.reverseRecursiveHelper(node.next);
+
+    // Reverse the link
+    node.next.next = node;
+    node.next = null;
+
+    return reversedList;
+  }
+
   // Traverse and print the list (for debugging)
   print() {
     let current = this.head;
@@ -113,19 +133,31 @@ class DoublyLinkedList {
   getSize() {
     return this.size;
   }
+
+  bulkInsertDummyData() {
+    // Append nodes to the list
+    list.append(10);
+    list.append(20);
+    list.append(30);
+    list.print(); // Output: 10 <-> 20 <-> 30
+
+    // Prepend nodes to the list
+    list.prepend(5);
+    list.print(); // Output: 5 <-> 10 <-> 20 <-> 30
+  }
 }
 
 const list = new DoublyLinkedList();
 
 // Append nodes to the list
-list.append(10);
-list.append(20);
-list.append(30);
-list.print(); // Output: 10 <-> 20 <-> 30
+// list.append(10);
+// list.append(20);
+// list.append(30);
+// list.print(); // Output: 10 <-> 20 <-> 30
 
-// Prepend nodes to the list
-list.prepend(5);
-list.print(); // Output: 5 <-> 10 <-> 20 <-> 30
+// // Prepend nodes to the list
+// list.prepend(5);
+// list.print(); // Output: 5 <-> 10 <-> 20 <-> 30
 
 // Remove a specific node
 // const node = list.find(20);
@@ -140,8 +172,14 @@ list.print(); // Output: 5 <-> 10 <-> 20 <-> 30
 // list.removeLast();
 // list.print(); // Output: 10
 
-console.log('\nReverse')
-list.iterativeReversal()
-list.print()
+// console.log('\nIterative Reverse')
+// list.iterativeReversal()
+// list.print()
+
+// console.log('\nRecursive Reverse')
+// list.recursiveReversal()
+// list.print()
+
+
 // Check the size of the list
-console.log('size = ', list.getSize()); // Output: 1
+// console.log('size = ', list.getSize()); // Output: 1

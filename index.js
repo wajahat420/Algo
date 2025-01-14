@@ -5,8 +5,10 @@ const app = express();
 // require('./Quick-Sort')
 // require('./Binary-Search')
 // require('./Arrays/Sliding-Window')
-require('./Linked-list/doubly')
+// require('./Linked-list/doubly')  
 // require('./Linked-list/singly')
+// require('./Linked-list/circular-singly')
+require('./Linked-list/floyd-tortoise-N-hare-algo')
 
 // Example route
 app.get('/api/example', responseMiddleware, (req, res) => {
