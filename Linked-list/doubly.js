@@ -183,3 +183,7 @@ const list = new DoublyLinkedList();
 
 // Check the size of the list
 // console.log('size = ', list.getSize()); // Output: 1
+
+module.exports = {
+  Node, DoublyLinkedList
+}

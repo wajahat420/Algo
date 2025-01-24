@@ -8,7 +8,9 @@ const app = express();
 // require('./Linked-list/doubly')  
 // require('./Linked-list/singly')
 // require('./Linked-list/circular-singly')
-require('./Linked-list/floyd-tortoise-N-hare-algo')
+// require('./Linked-list/floyd-tortoise-N-hare-algo')
+// require('./Linked-list/BT')
+require('./Algo/Digkstra')
 
 // Example route
 app.get('/api/example', responseMiddleware, (req, res) => {
