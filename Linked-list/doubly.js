@@ -147,7 +147,7 @@ class DoublyLinkedList {
   }
 }
 
-const list = new DoublyLinkedList();
+// const list = new DoublyLinkedList();
 
 // Append nodes to the list
 // list.append(10);
